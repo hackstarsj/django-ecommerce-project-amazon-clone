@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -9,13 +11,16 @@ class CustomUser(AbstractUser):
 
 class AdminUser(models.Model):
     profile_pic=models.FileField(default="")
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
 
 class StaffUser(models.Model):
     profile_pic=models.FileField(default="")
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
 
 class MerchantUser(models.Model):
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     profile_pic=models.FileField(default="")
     company_name=models.CharField(max_length=255)
     gst_details=models.CharField(max_length=255)
@@ -24,8 +29,9 @@ class MerchantUser(models.Model):
 
 
 class CustomerUser(models.Model):
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     profile_pic=models.FileField(default="")
-    created_at=models.DateField(auto_now_add=True)
+    created_at=models.DateTimeField(auto_now_add=True)
 
 
 class Categories(models.Model):
@@ -119,7 +125,7 @@ class ProductReviews(models.Model):
     product_id=models.ForeignKey(Products,on_delete=models.CASCADE)
     user_id=models.ForeignKey(CustomerUser,on_delete=models.CASCADE)
     review_image=models.FileField()
-    rating=models.CharField(default="5")
+    rating=models.CharField(default="5",max_length=255)
     review=models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
     is_active=models.IntegerField(default=1)
@@ -138,6 +144,7 @@ class ProductVarient(models.Model):
 
 class ProductVarientItems(models.Model):
     id=models.AutoField(primary_key=True)
+    product_varient_id=models.ForeignKey(ProductVarient,on_delete=models.CASCADE)
     product_id=models.ForeignKey(Products,on_delete=models.CASCADE)
     title=models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
@@ -155,11 +162,30 @@ class OrderDeliveryStatus(models.Model):
     id=models.AutoField(primary_key=True)
     order_id=models.ForeignKey(CustomerOrders,on_delete=models.CASCADE)
     status=models.CharField(max_length=255)
+    status_message=models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
 
 
+@receiver(post_save,sender=CustomUser)
+def create_user_profile(sender,instance,created,**kwargs):
+    if created:
+        if instance.user_type==1:
+            AdminUser.objects.create(auth_user_id=instance)
+        if instance.user_type==2:
+            StaffUser.objects.create(auth_user_id=instance)
+        if instance.user_type==3:
+            MerchantUser.objects.create(auth_user_id=instance,company_name="",gst_details="",address="")
+        if instance.user_type==4:
+            CustomerUser.objects.create(auth_user_id=instance)            
 
-
-
- 
+@receiver(post_save,sender=CustomUser)
+def save_user_profile(sender,instance,**kwargs):
+    if instance.user_type==1:
+        instance.adminuser.save()
+    if instance.user_type==2:
+        instance.staffuser.save()
+    if instance.user_type==3:
+        instance.merchantuser.save()
+    if instance.user_type==4:
+        instance.customeruser.save()
