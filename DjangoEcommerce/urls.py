@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from DjangoEcommerceApp import views
+from DjangoEcommerceApp import AdminViews
+from django.conf.urls.static import static
+
+from DjangoEcommerce import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path('admin/', views.adminLogin),
+    path('demo',views.demoPage),
+    path('demoPage',views.demoPageTemplate),
+
+    # PAGE FOR ADMIN
+    path('admin_home',AdminViews.admin_home)
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
