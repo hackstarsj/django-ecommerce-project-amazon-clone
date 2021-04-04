@@ -32,12 +32,13 @@
               <div class="card-header"><h4>Login</h4></div>
 
               <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="{% url 'admin_login_process' %}" class="needs-validation" novalidate="">
+                  {% csrf_token %}
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                    <label for="email">Username</label>
+                    <input id="email" type="text" class="form-control" name="username" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
-                      Please fill in your email
+                      Please fill in your Username
                     </div>
                   </div>
 
@@ -58,6 +59,22 @@
                       <label class="custom-control-label" for="remember-me">Remember Me</label>
                     </div>
                   </div>
+                  {% if messages %}
+                  <div class="form-group">
+                    {% for message in messages %}
+                      {% if message.tags == "error" %}
+                      <div class="alert alert-danger">
+                        {{ message }}
+                      </div>
+                      {% endif %}
+                      {% if message.tags == "success" %}
+                      <div class="alert alert-success">
+                        {{ message }}
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  {% endif %}
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
