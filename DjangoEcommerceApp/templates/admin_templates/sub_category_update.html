@@ -1,0 +1,66 @@
+{% extends 'admin_templates/base_template.html' %}
+{% block title %}
+Sub Category Update
+{% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block page_title %}
+Sub Category Update
+{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="row">
+<div class="col-12 col-md-12 col-lg-12">
+<div class="card">
+    <div class="card-header">
+    <h4>Sub Categories</h4>
+    </div>
+    <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            {% if field.field.widget.input_type != "select" %}
+            <input type="{{ field.field.widget.input_type }}" name={{ field.name }} id="{{ field.name }}" class="form-control" value="{{ field.value }}">
+            {% endif %}
+
+            {% if field.field.widget.input_type == "select" %}
+            <select name={{ field.name }} id="{{ field.name }}" class="form-control">
+                {% for id,value in field.field.choices %}
+                    <option value="{{ id }}"  {% if id == field.value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+            
+            {% if field.errors %}
+            <div class="alert alert-danger" style="margin:10px">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% if field.field.widget.input_type == "file" %}
+            <div class="form-group">
+            <label>Current {{ field.label }}</label><br>
+            <div class="card">
+                    <div class="card-body">
+                                    <img src="/media/{{ field.value }}" style="height:250px"/>
+                    </div>
+                    </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-block">SAVE SUB CATEGORY</button>
+    </form>
+</div>
+</div>
+</div>
+{% endblock page_content %}
+
+
+{% block custom_js %}
+{% endblock custom_js %}

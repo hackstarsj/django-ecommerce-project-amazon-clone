@@ -1,0 +1,45 @@
+{% extends 'admin_templates/base_template.html' %}
+{% block title %}
+Category Create
+{% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block page_title %}
+Category Create
+{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="row">
+<div class="col-12 col-md-12 col-lg-12">
+<div class="card">
+    <div class="card-header">
+    <h4>Categories</h4>
+    </div>
+    <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type }}" name={{ field.name }} id="{{ field.name }}" class="form-control">
+            {% if field.errors %}
+            <div class="alert alert-danger" style="margin:10px">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-block">SAVE CATEGORY</button>
+    </form>
+</div>
+</div>
+</div>
+{% endblock page_content %}
+
+
+{% block custom_js %}
+{% endblock custom_js %}
