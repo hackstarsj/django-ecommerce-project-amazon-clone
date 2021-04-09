@@ -25,7 +25,7 @@ Category List
         </div>
         <div class="article-details">
         <p>{{ category.description }}</p>
-        <p>Url Slug : {{ category.url_slug }}</p>
+        <p><span class="badge badge-warning">Url Slug : {{ category.url_slug }}</span></p>
         <div class="article-cta">
             <label class="custom-switch mt-2" style="float:left">
                         <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" {% if category.is_active == 1 %}checked{% endif %}>

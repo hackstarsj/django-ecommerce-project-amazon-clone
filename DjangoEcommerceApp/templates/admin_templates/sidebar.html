@@ -33,6 +33,19 @@
             <li class='{% if request.path == sub_category_create %} active {% endif %}'><a class="nav-link" href="{% url 'sub_category_create' %}">Add Sub Categories</a></li>
           </ul>
         </li>
+
+        
+        {% comment %} Merchant User MENU {% endcomment %}
+        {% url 'merchant_create' as merchant_create %}
+        {% url 'merchant_list' as merchant_list %}
+        {% url 'merchant_update' id as merchant_update %}
+        <li class="dropdown {% if request.path == merchant_create %} active {% endif %}{% if request.path == merchant_list %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Merchant User</span></a>
+          <ul class="dropdown-menu">
+            <li class='{% if request.path == merchant_create %} active {% endif %}'><a class="nav-link" href="{% url 'merchant_create' %}">Add Merchant User</a></li>
+            <li class='{% if request.path == merchant_list %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="{% url 'merchant_list' %}">Merchant User List</a></li>
+          </ul>
+        </li>
       </ul>
 
       <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

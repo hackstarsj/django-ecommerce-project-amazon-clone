@@ -26,7 +26,9 @@ class MerchantUser(models.Model):
     company_name=models.CharField(max_length=255)
     gst_details=models.CharField(max_length=255)
     address=models.TextField()
+    is_added_by_admin=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
+    objects=models.Manager()
 
 
 class CustomerUser(models.Model):

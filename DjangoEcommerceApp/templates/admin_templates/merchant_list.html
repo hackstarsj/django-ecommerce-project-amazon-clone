@@ -1,0 +1,50 @@
+{% extends 'admin_templates/base_template.html' %}
+{% block title %}
+Merchant User List
+{% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block page_title %}
+Merchant User List
+{% endblock page_title %}
+
+{% block page_content %}
+<div class="row">
+{% for merchantuser in merchantuser_list %}
+<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+    <article class="article article-style-b">
+        <div class="article-header">
+        <div class="article-image" data-background="{{ merchantuser.profile_pic }}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
+        </div>
+        <div class="article-badge">
+            <div class="article-badge-item bg-danger"><i class="fas fa-fire"></i>{{ merchantuser.auth_user_id.username }}</div>
+        </div>
+        </div>
+        <div class="article-details">
+        <p class="no-margin"><span class="badge badge-warning"><i class="fas fa-user-circle"></i> Name : {{ merchantuser.auth_user_id.first_name }} {{ merchantuser.auth_user_id.last_name }}</span></p>
+        <p class="no-margin"><span class="badge badge-info"><i class="fas fa-envelope-o "></i> Email : {{ merchantuser.auth_user_id.email }}</span></p>
+        <p class="no-margin"><span class="badge badge-primary"><i class="fas fa-file-o"></i> GST : {{ merchantuser.gst_details }}</span></p>
+        <p class="no-margin"><span class="badge badge-success"><i class="fas fa-building"></i> Company : {{ merchantuser.company_name }}</span></p>
+        <p class="no-margin"><span class="badge badge-primary"><i class="fas fa-map-marker"></i> Address : {{ merchantuser.address }}</span></p>
+        <p class=""><span class="badge badge-info"><i class="fas fa-lock"></i> Added By Admin {{ merchantuser.is_added_by_admin }}</span></p>
+        <div class="article-cta">
+            <label class="custom-switch mt-2" style="float:left">
+                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" {% if merchantuser.auth_user_id.is_active == 1 %}checked{% endif %}>
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">ACTIVE</span>
+            </label>
+            <a href="{% url 'merchant_update' merchantuser.auth_user_id.id %}" class="btn btn-warning">EDIT <i class="fas fa-chevron-right"></i></a>
+        </div>
+        </div>
+    </article>
+</div>
+{% endfor %}
+</div>
+{% endblock page_content %}
+
+
+{% block custom_js %}
+{% endblock custom_js %}

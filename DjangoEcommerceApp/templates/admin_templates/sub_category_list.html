@@ -26,7 +26,7 @@ Sub Category List
         <div class="article-details">
         <p><span class="badge badge-primary">{{ subcategory.category_id.title }}</span></p>
         <p>{{ subcategory.description }}</p>
-        <p>Url Slug : {{ subcategory.url_slug }}</p>
+        <p><span class="badge badge-warning">Url Slug : {{ subcategory.url_slug }}</span></p>
         <div class="article-cta">
             <label class="custom-switch mt-2" style="float:left">
                         <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" {% if subcategory.is_active == 1 %}checked{% endif %}>

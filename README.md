@@ -35,3 +35,12 @@
 ## Added Admin Sub Category Update Page
 <img src="screenshots/category_update.PNG" style="width:100%" alt="category"/>
 
+## Added Admin Merchant Update Page
+<img src="screenshots/merchant_update.PNG" style="width:100%" alt="category"/>
+
+## Added Admin Merchant Create Page
+<img src="screenshots/merchant_create.PNG" style="width:100%" alt="category"/>
+
+## Added Admin Merchant List Page
+<img src="screenshots/merchant_list.PNG" style="width:100%" alt="category"/>
+
