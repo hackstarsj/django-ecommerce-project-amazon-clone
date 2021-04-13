@@ -44,3 +44,6 @@
 ## Added Admin Merchant List Page
 <img src="screenshots/merchant_list.PNG" style="width:100%" alt="category"/>
 
+## Added Searching Sorting and Pagination Features
+<img src="screenshots/category_searching.PNG" style="width:100%" alt="category"/>
+
