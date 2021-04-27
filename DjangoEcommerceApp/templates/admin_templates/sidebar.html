@@ -45,6 +45,14 @@
             <li class='{% if request.path == merchant_create %} active {% endif %}'><a class="nav-link" href="{% url 'merchant_create' %}">Add Merchant User</a></li>
             <li class='{% if request.path == merchant_list %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="{% url 'merchant_list' %}">Merchant User List</a></li>
           </ul>
+        </li>      
+       
+       {% url 'product_view' as product_view %}
+        <li class="dropdown {% if request.path == product_view %} active {% endif %}">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Products</span></a>
+          <ul class="dropdown-menu">
+            <li class='{% if request.path == product_view %} active {% endif %}'><a class="nav-link" href="{% url 'product_view' %}">Add Products</a></li>
+          </ul>
         </li>
       </ul>
 

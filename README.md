@@ -47,3 +47,6 @@
 ## Added Searching Sorting and Pagination Features
 <img src="screenshots/category_searching.PNG" style="width:100%" alt="category"/>
 
+## Added Add Product Page With Dynamic Content and Media
+<img src="screenshots/product_create.png" style="width:100%" alt="category"/>
+
