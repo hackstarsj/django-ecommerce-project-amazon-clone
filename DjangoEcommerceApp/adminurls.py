@@ -48,5 +48,7 @@ urlpatterns = [
     path('merchant_update/<slug:pk>',AdminViews.MerchantUserUpdateView.as_view(),name="merchant_update"),
 
     #Products
-    path('product_create',AdminViews.ProductView.as_view(),name="product_view")
+    path('product_create',AdminViews.ProductView.as_view(),name="product_view"),
+    path('product_list',AdminViews.ProductListView.as_view(),name="product_list"),
+    path('file_upload',AdminViews.file_upload,name="file_upload")
 ]

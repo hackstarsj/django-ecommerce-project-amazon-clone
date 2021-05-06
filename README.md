@@ -50,3 +50,5 @@
 ## Added Add Product Page With Dynamic Content and Media
 <img src="screenshots/product_create.png" style="width:100%" alt="category"/>
 
+## Added Product List Page
+<img src="screenshots/product_list.png" style="width:100%" alt="Products"/>

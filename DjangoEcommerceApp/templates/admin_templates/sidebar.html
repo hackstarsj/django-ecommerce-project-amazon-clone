@@ -48,10 +48,12 @@
         </li>      
        
        {% url 'product_view' as product_view %}
-        <li class="dropdown {% if request.path == product_view %} active {% endif %}">
+       {% url 'product_list' as product_list %}
+        <li class="dropdown {% if request.path == product_view %} active {% endif %}  {% if request.path == product_list %} active {% endif %}">
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Products</span></a>
           <ul class="dropdown-menu">
             <li class='{% if request.path == product_view %} active {% endif %}'><a class="nav-link" href="{% url 'product_view' %}">Add Products</a></li>
+            <li class='{% if request.path == product_list %} active {% endif %}'><a class="nav-link" href="{% url 'product_list' %}">Product List</a></li>
           </ul>
         </li>
       </ul>
