@@ -45,15 +45,41 @@
             <li class='{% if request.path == merchant_create %} active {% endif %}'><a class="nav-link" href="{% url 'merchant_create' %}">Add Merchant User</a></li>
             <li class='{% if request.path == merchant_list %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="{% url 'merchant_list' %}">Merchant User List</a></li>
           </ul>
+        </li>  
+        {% comment %} STAFF USER URLS {% endcomment %}
+        {% url 'staff_create' as staff_create %}
+        {% url 'staff_list' as staff_list %}
+        {% url 'staff_update' id as staff_update %}
+        <li class="dropdown {% if request.path == staff_create %} active {% endif %}{% if request.path == staff_list %} active {% endif %} {% if request.path == staff_update %} active {% endif %}">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Staff User</span></a>
+          <ul class="dropdown-menu">
+            <li class='{% if request.path == staff_create %} active {% endif %}'><a class="nav-link" href="{% url 'staff_create' %}">Add Staff User</a></li>
+            <li class='{% if request.path == staff_list %} active {% endif %} {% if request.path == staff_update %} active {% endif %}' ><a class="nav-link" href="{% url 'staff_list' %}">Staff User List</a></li>
+          </ul>
+        </li>      
+        {% comment %} CUSTOMER USER URLS {% endcomment %}
+        {% url 'customer_create' as customer_create %}
+        {% url 'customer_list' as customer_list %}
+        {% url 'customer_update' id as customer_update %}
+        <li class="dropdown {% if request.path == customer_create %} active {% endif %}{% if request.path == customer_list %} active {% endif %} {% if request.path == customer_update %} active {% endif %}">
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Customer User</span></a>
+          <ul class="dropdown-menu">
+            <li class='{% if request.path == customer_create %} active {% endif %}'><a class="nav-link" href="{% url 'customer_create' %}">Add Customer User</a></li>
+            <li class='{% if request.path == customer_list %} active {% endif %} {% if request.path == customer_update %} active {% endif %}' ><a class="nav-link" href="{% url 'customer_list' %}">Customer User List</a></li>
+          </ul>
         </li>      
        
        {% url 'product_view' as product_view %}
        {% url 'product_list' as product_list %}
-        <li class="dropdown {% if request.path == product_view %} active {% endif %}  {% if request.path == product_list %} active {% endif %}">
+       {% url 'product_edit' product.id as product_edit %}
+       {% url 'product_add_media' product.id as product_add_media %}
+       {% url 'product_edit_media' product.id as product_edit_media %}
+       {% url 'product_add_stocks' product.id as product_add_stocks %}
+        <li class="dropdown {% if request.path == product_view %} active {% endif %}  {% if request.path == product_list %} active {% endif %} {% if request.path == product_edit %} active {% endif %}{% if request.path == product_add_media %} active {% endif %}{% if request.path == product_edit_media %} active {% endif %}{% if request.path == product_add_stocks %} active {% endif %}">
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Products</span></a>
           <ul class="dropdown-menu">
             <li class='{% if request.path == product_view %} active {% endif %}'><a class="nav-link" href="{% url 'product_view' %}">Add Products</a></li>
-            <li class='{% if request.path == product_list %} active {% endif %}'><a class="nav-link" href="{% url 'product_list' %}">Product List</a></li>
+            <li class='{% if request.path == product_list %} active {% endif %} {% if request.path == product_edit %} active {% endif %} {% if request.path == product_add_media %} active {% endif %}{% if request.path == product_edit_media %} active {% endif %}{% if request.path == product_add_stocks %} active {% endif %}'><a class="nav-link" href="{% url 'product_list' %}">Product List</a></li>
           </ul>
         </li>
       </ul>

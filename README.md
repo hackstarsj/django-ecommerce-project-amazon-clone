@@ -52,3 +52,15 @@
 
 ## Added Product List Page
 <img src="screenshots/product_list.png" style="width:100%" alt="Products"/>
+
+## Added Product Edit Page
+<img src="screenshots/product_edit.png" style="width:100%" alt="Products"/>
+
+## Added Product Add Media Page
+<img src="screenshots/product_add_media.png" style="width:100%" alt="Products"/>
+
+## Added Product Edit Media Page
+<img src="screenshots/product_edit_media.png" style="width:100%" alt="Products"/>
+
+## Added Product Add Stock Page
+<img src="screenshots/product_add_stock.png" style="width:100%" alt="Products"/>

@@ -1,6 +1,6 @@
 {% extends 'admin_templates/base_template.html' %}
 {% block title %}
-Product List
+Customer User List
 {% endblock title %}
 
 
@@ -8,7 +8,7 @@ Product List
 {% endblock custom_css %}
 
 {% block page_title %}
-Product List
+Customer User List
 {% endblock page_title %}
 
 {% block page_content %}
@@ -35,40 +35,36 @@ Product List
                   
             <div class="card-body">
                 <b>Sort By : - </b>
-                <a href="{% url 'product_list' %}?filter={{ filter }}&orderby=id">ID</a>  | 
-                <a href="{% url 'product_list' %}?filter={{ filter }}&orderby=product_name">Title</a> |  
-                <a href="{% url 'product_list' %}?filter={{ filter }}&orderby=product_description">Description</a> 
+                <a href="{% url 'customer_list' %}?filter={{ filter }}&orderby=id">ID</a>  | 
+                <a href="{% url 'customer_list' %}?filter={{ filter }}&orderby=created_at">Newest</a> |  
+                <a href="{% url 'customer_list' %}?filter={{ filter }}&orderby=auth_user_id__first_name">First Name</a> |
+                <a href="{% url 'customer_list' %}?filter={{ filter }}&orderby=auth_user_id__username">Username</a> |
             </div>
         </div>
         </div>
     </div>
 </div>
 <div class="row">
-{% for product in object_list %}
+{% for customeruser in customeruser_list %}
 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
     <article class="article article-style-b">
         <div class="article-header">
-        <div class="article-image" data-background="{{ product.media.media_content }}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
+        <div class="article-image" data-background="{{ customeruser.profile_pic }}" style="background-image: url(&quot;assets/img/news/img13.jpg&quot;);">
         </div>
         <div class="article-badge">
-            <div class="article-badge-item bg-danger"><i class="fas fa-fire"></i>{{ product.product.product_name }}</div>
+            <div class="article-badge-item bg-danger"><i class="fas fa-fire"></i>{{ customeruser.auth_user_id.username }}</div>
         </div>
         </div>
         <div class="article-details">
-        <p><span class="badge badge-primary">{{ product.product.subcategories_id.title }}</span></p>
-        <p>{{ subcategory.description }}</p>
-        <p><span class="badge badge-warning">Url Slug : {{ product.product.url_slug }}</span></p>
+        <p class="no-margin"><span class="badge badge-warning"><i class="fas fa-user-circle"></i> Name : {{ customeruser.auth_user_id.first_name }} {{ customeruser.auth_user_id.last_name }}</span></p>
+        <p class="no-margin"><span class="badge badge-info"><i class="fas fa-envelope-o "></i> Email : {{ customeruser.auth_user_id.email }}</span></p>
         <div class="article-cta">
             <label class="custom-switch mt-2" style="float:left">
-                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" {% if product.product.is_active == 1 %}checked{% endif %}>
+                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" {% if customeruser.auth_user_id.is_active == 1 %}checked{% endif %}>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">ACTIVE</span>
             </label>
-            <a href="{% url 'product_edit' product_id=product.product.id %}" class="btn btn-warning ">EDIT <i class="fas fa-chevron-right"></i></a>
-            <div><br></div>
-            <a href="{% url 'product_add_media' product_id=product.product.id %}" class="btn btn-danger btn-block">ADD MEDIA <i class="fas fa-chevron-right"></i></a>
-            <a href="{% url 'product_edit_media' product_id=product.product.id %}" class="btn btn-success btn-block">EDIT MEDIA <i class="fas fa-chevron-right"></i></a>
-            <a href="{% url 'product_add_stocks' product_id=product.product.id %}" class="btn btn-primary btn-block">ADD Stocks <i class="fas fa-chevron-right"></i></a>
+            <a href="{% url 'customer_update' customeruser.auth_user_id.id %}" class="btn btn-warning">EDIT <i class="fas fa-chevron-right"></i></a>
         </div>
         </div>
     </article>
@@ -83,15 +79,15 @@ Product List
                     <nav aria-label="Page navigation example">
                       <ul class="pagination">
                         {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="{% url 'product_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="{% url 'customer_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
                         {% else %}
                             <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                         {% endif %}
                         {% for i in paginator.page_range %}
-                                <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="{% url 'product_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{ i }}</a></li>
+                                <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="{% url 'customer_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{ i }}</a></li>
                         {% endfor %}
                         {% if page_obj.has_next %}
-                            <li class="page-item"><a class="page-link" href="{% url 'product_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="{% url 'customer_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a></li>
                         {% else %}
                             <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                         {% endif %}
@@ -102,7 +98,6 @@ Product List
                 </div>
                 </div>
 </div>
-
 {% endblock page_content %}
 
 

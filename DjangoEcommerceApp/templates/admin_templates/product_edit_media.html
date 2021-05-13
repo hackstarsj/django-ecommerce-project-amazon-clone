@@ -1,0 +1,71 @@
+{% extends 'admin_templates/base_template.html' %}
+{% block title %}
+EDIT PRODUCT MEDIA
+{% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block page_title %}
+EDIT PRODUCT MEDIA
+{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+            <h4>PRODUCT MEDIA #{{ product.id }} : {{ product.product_name }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">  
+                    {% for product_media in product_medias  %}
+                        {% if product_media.media_type == "1" %}
+                            <div class="col-lg-6">
+                                <div class="card">
+                                <div class="card-body">
+                                    <img src="{{ product_media.media_content }}" style='width:100%;height:300px;object-fit:cover'/>
+                                    <br>
+                                    <br>
+                                    <button type="button" class="btn btn-danger btn-block delete_product"  data-location="{% url 'product_media_delete' id=product_media.id %}">DELETE</button>
+                                </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if product_media.media_type == "2" %}
+                        <div class="col-lg-6">
+                                <div class="card">
+                                <div class="card-body">
+                                     <video src="{{ product_media.media_content }}" style='width:100%;height:300px;object-fit:cover' controls></video>
+                                     <br>
+                                    <button type="button" class="btn btn-danger btn-block delete_product"  data-location="{% url 'product_media_delete' id=product_media.id %}">DELETE</button>
+
+                                </div>
+                                </div>
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}
+
+
+{% block custom_js %}
+<script>
+    $(".delete_product").click(function(){
+        var id=$(this).data("location");
+        console.log(id);
+        var cnf=confirm("Are You Sure You want to Delete?");
+        if(cnf){
+            location=id;
+        }
+    });
+</script>
+{% endblock custom_js %}

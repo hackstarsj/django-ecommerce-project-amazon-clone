@@ -1,0 +1,59 @@
+{% extends 'admin_templates/base_template.html' %}
+{% block title %}
+PRODUCT STOCKS
+{% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block page_title %}
+PRODUCT STOCKS
+{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+            <h4>PRODUCT STOCKS #{{ product.id }} : {{ product.product_name }}</h4>
+            
+            </div>
+            <div class="card-body">
+                                <form method="post">  
+                    {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-12">
+                    <p>CURRENT IN STOCK : {{ product.in_stock_total }}</p>
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="text" name="add_stocks" class="form-control" placeholder="Add Stocks"/>
+                    </div>
+                       <div class="col-lg-12">
+                                                   <br>    
+
+                            <button type="submit" class="btn btn-primary btn-block">ADD STOCKS</button>
+                       </div> 
+                </div>
+                                    </form>      
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}
+
+
+{% block custom_js %}
+<script>
+    $(".delete_product").click(function(){
+        var id=$(this).data("location");
+        console.log(id);
+        var cnf=confirm("Are You Sure You want to Delete?");
+        if(cnf){
+            location=id;
+        }
+    });
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,56 @@
+{% extends 'admin_templates/base_template.html' %}
+{% block title %}
+Staff Update
+{% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block page_title %}
+Staff Update
+{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="row">
+<div class="col-12 col-md-12 col-lg-12">
+<div class="card">
+    <div class="card-header">
+    <h4>Staff Users Update</h4>
+    </div>
+    <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type }}" name={{ field.name }} id="{{ field.name }}" class="form-control" value='{{ field.value }}'>
+            {% if field.errors %}
+            <div class="alert alert-danger" style="margin:10px">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+          <div class="form-group">
+            <label>Current Profile Image</label><br>
+            <img src='{{ staffuser.profile_pic }}' style='height:150px'/>
+        </div>
+         <div class="form-group">
+            <label>Profile Image</label>
+            <input type="file" name="profile_pic" id="profile_pic" class="form-control">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary btn-block">SAVE STAFF USER</button>
+    </form>
+</div>
+</div>
+</div>
+</div>
+{% endblock page_content %}
+
+
+{% block custom_js %}
+{% endblock custom_js %}

@@ -50,5 +50,21 @@ urlpatterns = [
     #Products
     path('product_create',AdminViews.ProductView.as_view(),name="product_view"),
     path('product_list',AdminViews.ProductListView.as_view(),name="product_list"),
-    path('file_upload',AdminViews.file_upload,name="file_upload")
+    path('product_edit/<str:product_id>',AdminViews.ProductEdit.as_view(),name="product_edit"),
+    path('product_add_media/<str:product_id>',AdminViews.ProductAddMedia.as_view(),name="product_add_media"),
+    path('product_edit_media/<str:product_id>',AdminViews.ProductEditMedia.as_view(),name="product_edit_media"),
+    path('product_media_delete/<str:id>',AdminViews.ProductMediaDelete.as_view(),name="product_media_delete"),
+    path('product_add_stocks/<str:product_id>',AdminViews.ProductAddStocks.as_view(),name="product_add_stocks"),
+    path('file_upload',AdminViews.file_upload,name="file_upload"),
+
+    #Staff User
+    path('staff_create',AdminViews.StaffUserCreateView.as_view(),name="staff_create"),
+    path('staff_list',AdminViews.StaffUserListView.as_view(),name="staff_list"),
+    path('staff_update/<slug:pk>',AdminViews.StaffUserUpdateView.as_view(),name="staff_update"),
+
+    #Customer User
+    path('customer_create',AdminViews.CustomerUserCreateView.as_view(),name="customer_create"),
+    path('customer_list',AdminViews.CustomerUserListView.as_view(),name="customer_list"),
+    path('customer_update/<slug:pk>',AdminViews.CustomerUserUpdateView.as_view(),name="customer_update"),
+
 ]
