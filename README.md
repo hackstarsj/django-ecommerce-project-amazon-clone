@@ -1,4 +1,6 @@
-"# django-ecommerce-project-amazon-clone" 
+"# django-ecommerce-project-amazon-clone"
+## Latest Code Please Follow this link : 
+<a href="https://github.com/hackstarsj/AmazonCloneEcommerceProjectUsingDjangoReact">Amazon Clone With Inventory Management System in React and Django</a>
 
 ## Complete Playlist Tutorial Link : 
 
