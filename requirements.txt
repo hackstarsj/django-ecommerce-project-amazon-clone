@@ -1,0 +1,6 @@
+#All django frameworks used 4 years ago at the time of projects creation
+Django==3.2
+djangorestframework==3.12.
+django-allauth==0.44.0
+django-cors-headers==3.7.0
+django-extensions==3.1.3
