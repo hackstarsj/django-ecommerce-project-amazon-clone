@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.db.models import Q
 from DjangoEcommerce.settings import BASE_URL
 from django.views.decorators.csrf import csrf_exempt
+from .filters import ProductFilter
 
 @login_required(login_url="/admin/")
 def admin_home(request):
@@ -264,10 +265,10 @@ class ProductListView(ListView):
     paginate_by=3
 
     def get_queryset(self):
-        filter_val=self.request.GET.get("filter","")
+        self.filterset = ProductFilter(self.request.GET, queryset=super().get_queryset())
         order_by=self.request.GET.get("orderby","id")
-        if filter_val!="":
-            products=Products.objects.filter(Q(product_name__contains=filter_val) | Q(product_description__contains=filter_val)).order_by(order_by)
+        if self.request.GET.get("product_name"):
+            products=self.filterset.qs.order_by(order_by)
         else:
             products=Products.objects.all().order_by(order_by)
         
@@ -283,8 +284,8 @@ class ProductListView(ListView):
         context["filter"]=self.request.GET.get("filter","")
         context["orderby"]=self.request.GET.get("orderby","id")
         context["all_table_fields"]=Products._meta.get_fields()
+        context["all_products"]=Products.objects.all()
         return context
-
 
 class ProductEdit(View):
 
