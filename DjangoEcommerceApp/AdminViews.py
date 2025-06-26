@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.db.models import Q
 from DjangoEcommerce.settings import BASE_URL
 from django.views.decorators.csrf import csrf_exempt
+from .filters import ProductFilter
+from django.db.models import Prefetch
 
 @login_required(login_url="/admin/")
 def admin_home(request):
@@ -194,7 +196,6 @@ class ProductView(View):
             categories_list.append({"category":category,"sub_category":sub_category})
 
         merchant_users=MerchantUser.objects.filter(auth_user_id__is_active=True)
-
         return render(request,"admin_templates/product_create.html",{"categories":categories_list,"merchant_users":merchant_users})
 
     def post(self,request,*args,**kwargs):
@@ -264,27 +265,27 @@ class ProductListView(ListView):
     paginate_by=3
 
     def get_queryset(self):
-        filter_val=self.request.GET.get("filter","")
+        self.filterset = ProductFilter(self.request.GET, queryset=super().get_queryset())
         order_by=self.request.GET.get("orderby","id")
-        if filter_val!="":
-            products=Products.objects.filter(Q(product_name__contains=filter_val) | Q(product_description__contains=filter_val)).order_by(order_by)
-        else:
-            products=Products.objects.all().order_by(order_by)
-        
-        product_list=[]
-        for product in products:
-            product_media=ProductMedia.objects.filter(product_id=product.id,media_type=1,is_active=1).first()
+        products=self.filterset.qs.order_by(order_by)
+        media_qs=ProductMedia.objects.filter(media_type=1, is_active=1)
+        prefetched_products=products.prefetch_related(
+            Prefetch('productmedia_set', queryset=media_qs, to_attr='filtered_media')
+        )
+
+        product_list = []
+        for product in prefetched_products:
+            product_media=product.filtered_media[0] if product.filtered_media else None
             product_list.append({"product":product,"media":product_media})
 
         return product_list
 
     def get_context_data(self,**kwargs):
         context=super(ProductListView,self).get_context_data(**kwargs)
-        context["filter"]=self.request.GET.get("filter","")
         context["orderby"]=self.request.GET.get("orderby","id")
         context["all_table_fields"]=Products._meta.get_fields()
+        context["all_subCategories"]=SubCategories.objects.all()
         return context
-
 
 class ProductEdit(View):
 

@@ -20,7 +20,7 @@ Product List
                   <div class="card-body">
                   <form method="get">
                     <button class="btn  btn-primary" type="submit" style="float:right"><i class="fas fa-search"></i> Search</button>
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;float:right" name="filter" value="{{ filter }}">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;float:right" name="search" value="{{ search }}">
                    </form>
                   </div>
                   
@@ -32,12 +32,25 @@ Product List
     <div class="col-lg-12">
         <div class="search-element">
         <div class="card">
-                  
             <div class="card-body">
                 <b>Sort By : - </b>
-                <a href="{% url 'product_list' %}?filter={{ filter }}&orderby=id">ID</a>  | 
-                <a href="{% url 'product_list' %}?filter={{ filter }}&orderby=product_name">Title</a> |  
-                <a href="{% url 'product_list' %}?filter={{ filter }}&orderby=product_description">Description</a> 
+                <a href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}&orderby=id">ID</a>  | 
+                <a href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}&orderby=product_name">Title</a> |  
+                <a href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}&orderby=product_description">Description</a> 
+            </div>
+            <div class="card-body dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    {% for subCategories in all_subCategories %}
+                    <a href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}"
+                            class="dropdown-item">
+                            {{ subCategories.title}}
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         </div>
@@ -83,15 +96,15 @@ Product List
                     <nav aria-label="Page navigation example">
                       <ul class="pagination">
                         {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="{% url 'product_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
                         {% else %}
                             <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                         {% endif %}
                         {% for i in paginator.page_range %}
-                                <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="{% url 'product_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{ i }}</a></li>
+                                <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}&orderby={{ orderby }}&page={{ i }}">{{ i }}</a></li>
                         {% endfor %}
                         {% if page_obj.has_next %}
-                            <li class="page-item"><a class="page-link" href="{% url 'product_list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="{% url 'product_list' %}?subcategories_id={{ subCategories.id }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a></li>
                         {% else %}
                             <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                         {% endif %}
